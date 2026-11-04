@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Student — Practical 3{% endblock %}
+
+{% block content %}
+<div class="breadcrumb-nav">
+  <a href="{{ url_for('dashboard.index') }}">Dashboard</a>
+  <span class="breadcrumb-separator">/</span>
+  <a href="{{ url_for('students.list_students') }}">Practical 3: Students</a>
+  <span class="breadcrumb-separator">/</span>
+  <a href="{{ url_for('students.details', id=student.id) }}">{{ student.student_name }}</a>
+  <span class="breadcrumb-separator">/</span>
+  <span>Edit</span>
+</div>
+
+<div class="page-header">
+  <div class="page-header-text">
+    <h2>Edit Student Record</h2>
+    <p>Modify academic details for <strong>{{ student.student_name }}</strong> (ID: #{{ student.id }}).</p>
+  </div>
+  <div class="header-actions">
+    <a href="{{ url_for('students.details', id=student.id) }}" class="btn btn-outline btn-sm">View Details</a>
+    <a href="{{ url_for('students.list_students') }}" class="btn btn-outline btn-sm">Student List</a>
+  </div>
+</div>
+
+<div class="card form-card">
+  <div class="card-header">
+    <div>
+      <h3 class="card-title">Update Student Information</h3>
+      <p class="card-subtitle">Editing record #{{ student.id }} registered on {{ student.created_at }}</p>
+    </div>
+    <span class="practical-badge badge-p3">SQLite Update</span>
+  </div>
+
+  <form method="POST" action="{{ url_for('students.edit_student', id=student.id) }}" novalidate>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+    <div class="form-grid">
+      <!-- Student Name -->
+      <div class="form-group">
+        <label for="student_name" class="form-label">
+          Student Name <span class="required-star">*</span>
+        </label>
+        <input
+          type="text"
+          id="student_name"
+          name="student_name"
+          class="form-control {% if errors.student_name %}is-invalid{% endif %}"
+          value="{{ form_data.student_name }}"
+          required
+        >
+        {% if errors.student_name %}
+          <div class="invalid-feedback">{{ errors.student_name }}</div>
+        {% endif %}
+      </div>
+
+      <!-- Roll Number (Unique) -->
+      <div class="form-group">
+        <label for="roll_number" class="form-label">
+          Roll Number <span class="required-star">*</span>
+        </label>
+        <input
+          type="text"
+          id="roll_number"
+          name="roll_number"
+          class="form-control {% if errors.roll_number %}is-invalid{% endif %}"
+          value="{{ form_data.roll_number }}"
+          required
+        >
+        {% if errors.roll_number %}
+          <div class="invalid-feedback">{{ errors.roll_number }}</div>
+        {% endif %}
+      </div>
+
+      <!-- Department -->
+      <div class="form-group">
+        <label for="department" class="form-label">
+          Department <span class="required-star">*</span>
+        </label>
+        <select
+          id="department"
+          name="department"
+          class="form-select {% if errors.department %}is-invalid{% endif %}"
+          required
+        >
+          <option value="" disabled>-- Select Department --</option>
+          {% for dept in departments %}
+            <option value="{{ dept }}" {% if form_data.department == dept %}selected{% endif %}>{{ dept }}</option>
+          {% endfor %}
+        </select>
+        {% if errors.department %}
+          <div class="invalid-feedback">{{ errors.department }}</div>
+        {% endif %}
+      </div>
+
+      <!-- Semester -->
+      <div class="form-group">
+        <label for="semester" class="form-label">
+          Semester <span class="required-star">*</span>
+        </label>
+        <select
+          id="semester"
+          name="semester"
+          class="form-select {% if errors.semester %}is-invalid{% endif %}"
+          required
+        >
+          <option value="" disabled>-- Select Semester --</option>
+          {% for sem in semesters %}
+            <option value="{{ sem }}" {% if form_data.semester == sem %}selected{% endif %}>{{ sem }}</option>
+          {% endfor %}
+        </select>
+        {% if errors.semester %}
+          <div class="invalid-feedback">{{ errors.semester }}</div>
+        {% endif %}
+      </div>
+
+      <!-- Email -->
+      <div class="form-group">
+        <label for="email" class="form-label">
+          Email Address <span class="required-star">*</span>
+        </label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          class="form-control {% if errors.email %}is-invalid{% endif %}"
+          value="{{ form_data.email }}"
+          required
+        >
+        {% if errors.email %}
+          <div class="invalid-feedback">{{ errors.email }}</div>
+        {% endif %}
+      </div>
+
+      <!-- Phone -->
+      <div class="form-group">
+        <label for="phone" class="form-label">
+          Phone Number <span class="required-star">*</span>
+        </label>
+        <input
+          type="tel"
+          id="phone"
+          name="phone"
+          class="form-control {% if errors.phone %}is-invalid{% endif %}"
+          value="{{ form_data.phone }}"
+          required
+        >
+        {% if errors.phone %}
+          <div class="invalid-feedback">{{ errors.phone }}</div>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <a href="{{ url_for('students.details', id=student.id) }}" class="btn btn-outline">Cancel</a>
+      <button type="submit" class="btn btn-indigo">
+        <span>Save Changes</span>
+        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+        </svg>
+      </button>
+    </div>
+  </form>
+</div>
+{% endblock %}

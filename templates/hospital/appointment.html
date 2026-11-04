@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+
+{% block title %}Practical 2 — Hospital Appointment System{% endblock %}
+
+{% block content %}
+<div class="breadcrumb-nav">
+  <a href="{{ url_for('dashboard.index') }}">Dashboard</a>
+  <span class="breadcrumb-separator">/</span>
+  <span>Practical 2: Hospital Appointment System</span>
+</div>
+
+<div class="page-header">
+  <div class="page-header-text">
+    <h2>Hospital Appointment Booking</h2>
+    <p>Practical 2: Form validation for healthcare consultation booking, date constraints, and reference generation.</p>
+  </div>
+  <a href="{{ url_for('practicals.practicals') }}" class="btn btn-outline btn-sm">View Practical 2 Spec</a>
+</div>
+
+<div class="card form-card">
+  <div class="card-header">
+    <div>
+      <h3 class="card-title">Book a Medical Consultation</h3>
+      <p class="card-subtitle">Complete all required patient details and select a medical specialist</p>
+    </div>
+    <span class="practical-badge badge-p2">Academic Demo</span>
+  </div>
+
+  <form method="POST" action="{{ url_for('hospital.book_appointment') }}" novalidate>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+    <div class="form-grid">
+      <!-- Patient Name -->
+      <div class="form-group col-span-2">
+        <label for="patient_name" class="form-label">
+          Patient Full Name <span class="required-star">*</span>
+        </label>
+        <input
+          type="text"
+          id="patient_name"
+          name="patient_name"
+          class="form-control {% if errors.patient_name %}is-invalid{% endif %}"
+          placeholder="e.g., Rajesh Kumar"
+          value="{{ form_data.patient_name }}"
+          required
+        >
+        {% if errors.patient_name %}
+          <div class="invalid-feedback">{{ errors.patient_name }}</div>
+        {% else %}
+          <div class="form-hint">Letters, spaces, hyphens, and dots (2-60 characters).</div>
+        {% endif %}
+      </div>
+
+      <!-- Doctor Selection -->
+      <div class="form-group col-span-2">
+        <label for="doctor_name" class="form-label">
+          Select Consulting Doctor <span class="required-star">*</span>
+        </label>
+        <select
+          id="doctor_name"
+          name="doctor_name"
+          class="form-select {% if errors.doctor_name %}is-invalid{% endif %}"
+          required
+        >
+          <option value="" disabled {% if not form_data.doctor_name %}selected{% endif %}>-- Choose Specialist Doctor --</option>
+          {% for doc in doctors %}
+            <option value="{{ doc.name }}" {% if form_data.doctor_name == doc.name %}selected{% endif %}>
+              {{ doc.name }} — {{ doc.specialization }}
+            </option>
+          {% endfor %}
+        </select>
+        {% if errors.doctor_name %}
+          <div class="invalid-feedback">{{ errors.doctor_name }}</div>
+        {% endif %}
+      </div>
+
+      <!-- Appointment Date -->
+      <div class="form-group">
+        <label for="appointment_date" class="form-label">
+          Appointment Date <span class="required-star">*</span>
+        </label>
+        <input
+          type="date"
+          id="appointment_date"
+          name="appointment_date"
+          class="form-control {% if errors.appointment_date %}is-invalid{% endif %}"
+          value="{{ form_data.appointment_date }}"
+          min="{{ min_date }}"
+          data-min-today
+          required
+        >
+        {% if errors.appointment_date %}
+          <div class="invalid-feedback">{{ errors.appointment_date }}</div>
+        {% else %}
+          <div class="form-hint">Appointments cannot be booked for past dates.</div>
+        {% endif %}
+      </div>
+
+      <!-- Contact Number -->
+      <div class="form-group">
+        <label for="contact_number" class="form-label">
+          Contact Phone <span class="required-star">*</span>
+        </label>
+        <input
+          type="tel"
+          id="contact_number"
+          name="contact_number"
+          class="form-control {% if errors.contact_number %}is-invalid{% endif %}"
+          placeholder="e.g., 9876543210"
+          value="{{ form_data.contact_number }}"
+          required
+        >
+        {% if errors.contact_number %}
+          <div class="invalid-feedback">{{ errors.contact_number }}</div>
+        {% else %}
+          <div class="form-hint">10 to 15 digits (e.g., 9876543210).</div>
+        {% endif %}
+      </div>
+
+      <!-- Email Address -->
+      <div class="form-group col-span-2">
+        <label for="email" class="form-label">
+          Email Address <span class="required-star">*</span>
+        </label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          class="form-control {% if errors.email %}is-invalid{% endif %}"
+          placeholder="patient@example.com"
+          value="{{ form_data.email }}"
+          required
+        >
+        {% if errors.email %}
+          <div class="invalid-feedback">{{ errors.email }}</div>
+        {% else %}
+          <div class="form-hint">Used for receiving appointment confirmation receipt.</div>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="disclaimer-banner">
+      <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+      </svg>
+      <span>Academic Notice: This is an educational lab simulation. No real healthcare appointments are scheduled.</span>
+    </div>
+
+    <div class="form-actions">
+      <a href="{{ url_for('dashboard.index') }}" class="btn btn-outline">Cancel</a>
+      <button type="submit" class="btn btn-primary">
+        <span>Confirm Appointment</span>
+        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+        </svg>
+      </button>
+    </div>
+  </form>
+</div>
+{% endblock %}

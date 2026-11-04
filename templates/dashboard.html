@@ -1,0 +1,197 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard — Unified Management Portal{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div class="page-header-text">
+    <h2>Unified Academic Dashboard</h2>
+    <p>A consolidated laboratory suite hosting all four Flask practical modules with shared styling and SQLite backend.</p>
+  </div>
+  <div class="header-actions">
+    <a href="{{ url_for('practicals.practicals') }}" class="btn btn-outline">
+      <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+      </svg>
+      <span>Read Practical Docs</span>
+    </a>
+  </div>
+</div>
+
+<!-- Quick Statistics Bar -->
+<div class="stats-grid">
+  <div class="stat-card blue">
+    <div class="stat-icon blue">
+      <svg width="26" height="26" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+      </svg>
+    </div>
+    <div class="stat-details">
+      <h3>{{ student_count }}</h3>
+      <p>Stored Students (SQLite)</p>
+    </div>
+  </div>
+
+  <div class="stat-card indigo">
+    <div class="stat-icon indigo">
+      <svg width="26" height="26" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+      </svg>
+    </div>
+    <div class="stat-details">
+      <h3>{{ employee_count }}</h3>
+      <p>Stored Employees (SQLite)</p>
+    </div>
+  </div>
+
+  <div class="stat-card emerald">
+    <div class="stat-icon emerald">
+      <svg width="26" height="26" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+      </svg>
+    </div>
+    <div class="stat-details">
+      <h3>4 / 4</h3>
+      <p>Practicals Operational</p>
+    </div>
+  </div>
+
+  <div class="stat-card amber">
+    <div class="stat-icon amber">
+      <svg width="26" height="26" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+      </svg>
+    </div>
+    <div class="stat-details">
+      <h3>1</h3>
+      <p>Unified Flask Server</p>
+    </div>
+  </div>
+</div>
+
+<!-- Four Practicals Cards -->
+<div class="practicals-grid">
+  <!-- Practical 1 -->
+  <div class="practical-card">
+    <div>
+      <span class="practical-badge badge-p1">Practical 1 — Basic Forms</span>
+      <h3>Student Management Form</h3>
+      <p>
+        Demonstrates fundamental Flask form handling with HTTP POST, strict server-side validation, error notifications, and immediate result formatting without persistent storage.
+      </p>
+      <div class="tech-tags">
+        <span class="tech-tag">Flask Forms</span>
+        <span class="tech-tag">POST Method</span>
+        <span class="tech-tag">Input Validation</span>
+        <span class="tech-tag">Result View</span>
+      </div>
+    </div>
+    <a href="{{ url_for('student_form.form') }}" class="btn btn-primary">
+      <span>Open Module</span>
+      <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+      </svg>
+    </a>
+  </div>
+
+  <!-- Practical 2 -->
+  <div class="practical-card">
+    <div>
+      <span class="practical-badge badge-p2">Practical 2 — Appointment System</span>
+      <h3>Hospital Appointment Booking</h3>
+      <p>
+        Accepts patient details and doctor consultations. Validates phone, email, and prevents booking past dates. Displays a generated tracking ID on a confirmation slip.
+      </p>
+      <div class="tech-tags">
+        <span class="tech-tag">Date Validation</span>
+        <span class="tech-tag">Doctor Directory</span>
+        <span class="tech-tag">Reference ID Gen</span>
+        <span class="tech-tag">Confirmation Slip</span>
+      </div>
+    </div>
+    <a href="{{ url_for('hospital.index') }}" class="btn btn-primary">
+      <span>Open Module</span>
+      <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+      </svg>
+    </a>
+  </div>
+
+  <!-- Practical 3 -->
+  <div class="practical-card">
+    <div>
+      <span class="practical-badge badge-p3">Practical 3 — SQLite CRUD</span>
+      <h3>Student Information System</h3>
+      <p>
+        Complete CRUD lifecycle backed by SQLite: insert records, prevent duplicate roll numbers, search across columns, update student profiles, and perform safe deletions.
+      </p>
+      <div class="tech-tags">
+        <span class="tech-tag">SQLite Database</span>
+        <span class="tech-tag">Full CRUD</span>
+        <span class="tech-tag">Search & Filter</span>
+        <span class="tech-tag">Unique Constraints</span>
+      </div>
+    </div>
+    <a href="{{ url_for('students.list_students') }}" class="btn btn-indigo">
+      <span>Open Module</span>
+      <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+      </svg>
+    </a>
+  </div>
+
+  <!-- Practical 4 -->
+  <div class="practical-card">
+    <div>
+      <span class="practical-badge badge-p4">Practical 4 — Database Management</span>
+      <h3>Employee Management System</h3>
+      <p>
+        Accepts employee employment details, enforces unique Employee ID checks, validates compensation and contact formats, and displays persistent records in an admin table.
+      </p>
+      <div class="tech-tags">
+        <span class="tech-tag">SQLite Storage</span>
+        <span class="tech-tag">Record Insertion</span>
+        <span class="tech-tag">Tabular View</span>
+        <span class="tech-tag">Search by ID/Name</span>
+      </div>
+    </div>
+    <a href="{{ url_for('employees.list_employees') }}" class="btn btn-primary">
+      <span>Open Module</span>
+      <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+      </svg>
+    </a>
+  </div>
+</div>
+
+<!-- Architecture and Overview Card -->
+<div class="card">
+  <div class="card-header">
+    <div>
+      <h3 class="card-title">System Architecture Overview</h3>
+      <p class="card-subtitle">Unified monolithic Flask implementation fulfilling laboratory assignment guidelines</p>
+    </div>
+    <a href="{{ url_for('practicals.about') }}" class="btn btn-sm btn-outline">System Details</a>
+  </div>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+    <div>
+      <h4 style="font-size: 14px; font-weight: 700; color: var(--primary); margin-bottom: 6px;">Single Unified Backend</h4>
+      <p style="font-size: 13.5px; color: var(--text-secondary); line-height: 1.6;">
+        All four laboratory practicals run under a single Flask instance at <code class="code-pill">http://127.0.0.1:5000</code>. Flask Blueprints separate modular logic cleanly while sharing base Jinja2 layouts and CSS styles.
+      </p>
+    </div>
+    <div>
+      <h4 style="font-size: 14px; font-weight: 700; color: var(--primary); margin-bottom: 6px;">SQLite Relational Engine</h4>
+      <p style="font-size: 13.5px; color: var(--text-secondary); line-height: 1.6;">
+        Practicals 3 and 4 persist data to <code class="code-pill">instance/management.db</code>. Queries use parameterized SQL to guarantee integrity and protect against SQL injection vulnerabilities.
+      </p>
+    </div>
+    <div>
+      <h4 style="font-size: 14px; font-weight: 700; color: var(--primary); margin-bottom: 6px;">Academic Compliance</h4>
+      <p style="font-size: 13.5px; color: var(--text-secondary); line-height: 1.6;">
+        Practical 1 and Practical 2 demonstrate stateless form processing and validation, while Practicals 3 and 4 provide complete database-driven lifecycle operations as specified in the curriculum.
+      </p>
+    </div>
+  </div>
+</div>
+{% endblock %}

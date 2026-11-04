@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block title %}{{ student.student_name }} — Student Profile{% endblock %}
+
+{% block content %}
+<div class="breadcrumb-nav">
+  <a href="{{ url_for('dashboard.index') }}">Dashboard</a>
+  <span class="breadcrumb-separator">/</span>
+  <a href="{{ url_for('students.list_students') }}">Practical 3: Students</a>
+  <span class="breadcrumb-separator">/</span>
+  <span>{{ student.student_name }}</span>
+</div>
+
+<div class="page-header">
+  <div class="page-header-text">
+    <h2>Student Profile</h2>
+    <p>Detailed view of academic credentials stored in SQLite.</p>
+  </div>
+  <div class="header-actions">
+    <a href="{{ url_for('students.edit_student', id=student.id) }}" class="btn btn-indigo">
+      <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+      </svg>
+      <span>Edit Student</span>
+    </a>
+    <button
+      type="button"
+      class="btn btn-danger btn-delete-trigger"
+      data-action="{{ url_for('students.delete_student', id=student.id) }}"
+      data-name="{{ student.student_name }} ({{ student.roll_number }})"
+    >
+      <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+      </svg>
+      <span>Delete</span>
+    </button>
+  </div>
+</div>
+
+<div class="card" style="max-width: 800px; margin: 0 auto;">
+  <div style="display: flex; align-items: center; gap: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 24px; margin-bottom: 24px;">
+    <div style="width: 72px; height: 72px; border-radius: 50%; background: linear-gradient(135deg, var(--indigo), var(--primary)); display: flex; align-items: center; justify-content: center; color: white; font-size: 28px; font-weight: 700;">
+      {{ student.student_name[0] }}
+    </div>
+    <div>
+      <h3 style="font-size: 22px; font-weight: 800; color: var(--text-primary);">{{ student.student_name }}</h3>
+      <div style="display: flex; align-items: center; gap: 10px; margin-top: 4px;">
+        <span class="code-pill" style="font-size: 13px; font-weight: 700; color: var(--indigo);">
+          {{ student.roll_number }}
+        </span>
+        <span style="font-size: 12px; background: #eef2ff; color: #4338ca; padding: 2px 8px; border-radius: 4px; font-weight: 600;">
+          {{ student.semester }}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="detail-list">
+    <div class="detail-item">
+      <span class="detail-label">Database Primary Key ID</span>
+      <span class="detail-value">#{{ student.id }}</span>
+    </div>
+
+    <div class="detail-item">
+      <span class="detail-label">Official Roll Number</span>
+      <span class="detail-value">{{ student.roll_number }}</span>
+    </div>
+
+    <div class="detail-item">
+      <span class="detail-label">Academic Department</span>
+      <span class="detail-value">{{ student.department }}</span>
+    </div>
+
+    <div class="detail-item">
+      <span class="detail-label">Current Semester</span>
+      <span class="detail-value">{{ student.semester }}</span>
+    </div>
+
+    <div class="detail-item">
+      <span class="detail-label">Institutional Email</span>
+      <span class="detail-value">{{ student.email }}</span>
+    </div>
+
+    <div class="detail-item">
+      <span class="detail-label">Contact Phone</span>
+      <span class="detail-value">{{ student.phone }}</span>
+    </div>
+
+    <div class="detail-item">
+      <span class="detail-label">Record Registration Date</span>
+      <span class="detail-value">{{ student.created_at }}</span>
+    </div>
+  </div>
+
+  <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border-color); display: flex; justify-content: flex-end;">
+    <a href="{{ url_for('students.list_students') }}" class="btn btn-outline">Back to All Students</a>
+  </div>
+</div>
+{% endblock %}

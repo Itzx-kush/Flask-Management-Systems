@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block title %}Practical 1 — Student Form Demonstration{% endblock %}
+
+{% block content %}
+<div class="breadcrumb-nav">
+  <a href="{{ url_for('dashboard.index') }}">Dashboard</a>
+  <span class="breadcrumb-separator">/</span>
+  <span>Practical 1: Student Form Demonstration</span>
+</div>
+
+<div class="page-header">
+  <div class="page-header-text">
+    <h2>Student Management Form</h2>
+    <p>Practical 1: Form handling, input validation, and submission processing without database persistence.</p>
+  </div>
+  <a href="{{ url_for('practicals.practicals') }}" class="btn btn-outline btn-sm">View Practical 1 Spec</a>
+</div>
+
+<div class="card form-card">
+  <div class="card-header">
+    <div>
+      <h3 class="card-title">Student Registration Form</h3>
+      <p class="card-subtitle">Enter student credentials to test Flask form validation and result rendering</p>
+    </div>
+    <span class="practical-badge badge-p1">No DB (Stateless)</span>
+  </div>
+
+  <form method="POST" action="{{ url_for('student_form.form') }}" novalidate>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+    <div class="form-grid single-col">
+      <!-- Student Name -->
+      <div class="form-group">
+        <label for="student_name" class="form-label">
+          Student Name <span class="required-star">*</span>
+        </label>
+        <input
+          type="text"
+          id="student_name"
+          name="student_name"
+          class="form-control {% if errors.student_name %}is-invalid{% endif %}"
+          placeholder="e.g., Ananya Sharma"
+          value="{{ form_data.student_name }}"
+          required
+        >
+        {% if errors.student_name %}
+          <div class="invalid-feedback">{{ errors.student_name }}</div>
+        {% else %}
+          <div class="form-hint">Alphabetic letters, spaces, dots, or hyphens only (2-60 characters).</div>
+        {% endif %}
+      </div>
+
+      <!-- Department Selection -->
+      <div class="form-group">
+        <label for="department" class="form-label">
+          Department <span class="required-star">*</span>
+        </label>
+        <select
+          id="department"
+          name="department"
+          class="form-select {% if errors.department %}is-invalid{% endif %}"
+          required
+        >
+          <option value="" disabled {% if not form_data.department %}selected{% endif %}>-- Select Department --</option>
+          {% for dept in departments %}
+            <option value="{{ dept }}" {% if form_data.department == dept %}selected{% endif %}>{{ dept }}</option>
+          {% endfor %}
+        </select>
+        {% if errors.department %}
+          <div class="invalid-feedback">{{ errors.department }}</div>
+        {% else %}
+          <div class="form-hint">Select the student's assigned academic department from the list.</div>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <a href="{{ url_for('dashboard.index') }}" class="btn btn-outline">Cancel</a>
+      <button type="submit" class="btn btn-primary">
+        <span>Submit & Validate Details</span>
+        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+        </svg>
+      </button>
+    </div>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}Submission Result — Practical 1{% endblock %}
+
+{% block content %}
+<div class="breadcrumb-nav">
+  <a href="{{ url_for('dashboard.index') }}">Dashboard</a>
+  <span class="breadcrumb-separator">/</span>
+  <a href="{{ url_for('student_form.form') }}">Practical 1: Student Form</a>
+  <span class="breadcrumb-separator">/</span>
+  <span>Submission Result</span>
+</div>
+
+<div class="confirmation-card">
+  <div class="confirmation-header">
+    <div class="confirmation-icon">
+      <svg width="32" height="32" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+      </svg>
+    </div>
+    <h2>Student Details Submitted</h2>
+    <p>Practical 1 form handling and validation executed successfully.</p>
+  </div>
+
+  <div class="confirmation-body">
+    <div class="detail-list">
+      <div class="detail-item">
+        <span class="detail-label">Student Name</span>
+        <span class="detail-value">{{ student_name }}</span>
+      </div>
+
+      <div class="detail-item">
+        <span class="detail-label">Department</span>
+        <span class="detail-value">{{ department }}</span>
+      </div>
+
+      <div class="detail-item">
+        <span class="detail-label">Submission Timestamp</span>
+        <span class="detail-value">{{ submission_time }}</span>
+      </div>
+
+      <div class="detail-item">
+        <span class="detail-label">HTTP Method Handled</span>
+        <span class="detail-value"><code class="code-pill">POST</code></span>
+      </div>
+
+      <div class="detail-item">
+        <span class="detail-label">Validation Status</span>
+        <span class="detail-value" style="color: var(--success); display: inline-flex; align-items: center; gap: 4px;">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+          </svg>
+          Validated (Server-side)
+        </span>
+      </div>
+    </div>
+
+    <div style="margin-top: 32px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+      <a href="{{ url_for('student_form.form') }}" class="btn btn-primary">
+        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+        </svg>
+        <span>Submit Another Record</span>
+      </a>
+      <a href="{{ url_for('dashboard.index') }}" class="btn btn-outline">
+        <span>Back to Dashboard</span>
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}

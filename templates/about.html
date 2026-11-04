@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+
+{% block title %}About Project — Flask Management Systems{% endblock %}
+
+{% block content %}
+<div class="breadcrumb-nav">
+  <a href="{{ url_for('dashboard.index') }}">Dashboard</a>
+  <span class="breadcrumb-separator">/</span>
+  <span>About Project</span>
+</div>
+
+<div class="page-header">
+  <div class="page-header-text">
+    <h2>About Flask Management Systems</h2>
+    <p>Unified Python Flask web application integrating four laboratory practicals under a single administrative dashboard.</p>
+  </div>
+  <a href="{{ url_for('practicals.practicals') }}" class="btn btn-outline btn-sm">Read Practical Documentation</a>
+</div>
+
+<div style="display: grid; grid-template-columns: 2fr 1fr; gap: 24px; align-items: start;">
+  <div style="display: flex; flex-direction: column; gap: 24px;">
+    <!-- Architecture Description -->
+    <div class="card">
+      <h3 class="card-title" style="margin-bottom: 12px;">Project Motivation & Architecture</h3>
+      <p style="font-size: 14.5px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 16px;">
+        The <strong>Flask Management Systems</strong> platform unites four distinct academic practical assignments into a single, cohesive, production-grade web application. Instead of fragmented servers running on separate ports, all modules share one robust Flask backend running at <code class="code-pill">http://127.0.0.1:5000</code>.
+      </p>
+      <p style="font-size: 14.5px; color: var(--text-secondary); line-height: 1.7;">
+        The system demonstrates progressive web development concepts: starting with simple HTTP POST form handling and server-side validation (Practical 1 &amp; 2), moving to full relational database CRUD lifecycles, constraint enforcement, and search queries using SQLite (Practical 3 &amp; 4).
+      </p>
+    </div>
+
+    <!-- Practical Matrix -->
+    <div class="card">
+      <h3 class="card-title" style="margin-bottom: 16px;">Practicals Implementation Matrix</h3>
+      <table class="data-table" style="font-size: 13px;">
+        <thead>
+          <tr>
+            <th>Module</th>
+            <th>Type</th>
+            <th>Storage</th>
+            <th>Core Concepts</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>P1: Student Form</strong></td>
+            <td>Form Handling</td>
+            <td>Stateless</td>
+            <td>POST routing, input validation, result receipt</td>
+          </tr>
+          <tr>
+            <td><strong>P2: Hospital Booking</strong></td>
+            <td>Healthcare Form</td>
+            <td>Stateless</td>
+            <td>Past-date rejection, doctor directory, tracking ID</td>
+          </tr>
+          <tr>
+            <td><strong>P3: Student Info CRUD</strong></td>
+            <td>Database CRUD</td>
+            <td>SQLite (<code class="code-pill">students</code>)</td>
+            <td>Create, Read, Update, Delete, unique roll numbers</td>
+          </tr>
+          <tr>
+            <td><strong>P4: Employee Management</strong></td>
+            <td>Workforce DB</td>
+            <td>SQLite (<code class="code-pill">employees</code>)</td>
+            <td>Data insertion, unique employee ID, directory table</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Sidebar Column: Developer Card & Stack Info -->
+  <div style="display: flex; flex-direction: column; gap: 24px;">
+    <div class="card">
+      <h3 class="card-title" style="margin-bottom: 16px;">Developer & Repository</h3>
+      <div class="detail-list">
+        <div class="detail-item">
+          <span class="detail-label">Developer</span>
+          <span class="detail-value">Kusumakar Rokkam</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">GitHub Account</span>
+          <span class="detail-value"><a href="https://github.com/Itzx-kush" target="_blank" rel="noopener">@Itzx-kush</a></span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Repository</span>
+          <span class="detail-value"><a href="https://github.com/Itzx-kush/Flask-Management-Systems" target="_blank" rel="noopener">Flask-Management-Systems</a></span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Default Branch</span>
+          <span class="detail-value"><code class="code-pill">main</code></span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Feature Branch</span>
+          <span class="detail-value"><code class="code-pill">feature/flask-management-systems</code></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title" style="margin-bottom: 16px;">Technology Stack</h3>
+      <ul style="list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 13.5px; color: var(--text-secondary);">
+        <li style="display: flex; align-items: center; gap: 8px;">
+          <span style="width: 8px; height: 8px; border-radius: 50%; background: var(--primary);"></span>
+          <strong>Python 3.10+</strong> (Runtime)
+        </li>
+        <li style="display: flex; align-items: center; gap: 8px;">
+          <span style="width: 8px; height: 8px; border-radius: 50%; background: var(--indigo);"></span>
+          <strong>Flask 3.x</strong> (Web Framework &amp; Blueprints)
+        </li>
+        <li style="display: flex; align-items: center; gap: 8px;">
+          <span style="width: 8px; height: 8px; border-radius: 50%; background: var(--success);"></span>
+          <strong>SQLite 3</strong> (Relational Persistence Engine)
+        </li>
+        <li style="display: flex; align-items: center; gap: 8px;">
+          <span style="width: 8px; height: 8px; border-radius: 50%; background: var(--accent);"></span>
+          <strong>Jinja2</strong> (Dynamic HTML Template Rendering)
+        </li>
+        <li style="display: flex; align-items: center; gap: 8px;">
+          <span style="width: 8px; height: 8px; border-radius: 50%; background: var(--warning);"></span>
+          <strong>CSS3 &amp; JavaScript</strong> (Responsive Design System)
+        </li>
+        <li style="display: flex; align-items: center; gap: 8px;">
+          <span style="width: 8px; height: 8px; border-radius: 50%; background: #64748b;"></span>
+          <strong>Pytest</strong> (Automated Test Suite)
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+
+{% block title %}Practical 4 — Employee Management System{% endblock %}
+
+{% block content %}
+<div class="breadcrumb-nav">
+  <a href="{{ url_for('dashboard.index') }}">Dashboard</a>
+  <span class="breadcrumb-separator">/</span>
+  <span>Practical 4: Employee Management</span>
+</div>
+
+<div class="page-header">
+  <div class="page-header-text">
+    <h2>Employee Management System</h2>
+    <p>Practical 4: Store employee information in SQLite database and retrieve stored employee records in a table.</p>
+  </div>
+  <div class="header-actions">
+    <a href="{{ url_for('employees.add_employee') }}" class="btn btn-primary">
+      <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
+      </svg>
+      <span>Register Employee</span>
+    </a>
+  </div>
+</div>
+
+<div class="table-container">
+  <div class="table-toolbar">
+    <!-- Search Box for Employee Name or Employee ID -->
+    <form method="GET" action="{{ url_for('employees.list_employees') }}" class="search-box">
+      <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+      </svg>
+      <input
+        type="text"
+        name="q"
+        value="{{ search_query }}"
+        placeholder="Search employee name, ID, or designation..."
+        aria-label="Search employees"
+      >
+      {% if search_query %}
+        <a href="{{ url_for('employees.list_employees') }}" style="color: var(--text-muted); font-size: 18px; line-height: 1;" title="Clear search">&times;</a>
+      {% endif %}
+    </form>
+
+    <div style="font-size: 13px; color: var(--text-muted);">
+      Total Employees Stored: <strong>{{ employees|length }}</strong>
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Emp ID</th>
+          <th>Employee Name</th>
+          <th>Department</th>
+          <th>Designation</th>
+          <th>Salary</th>
+          <th>Joining Date</th>
+          <th>Contact</th>
+          <th style="text-align: right;">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if employees %}
+          {% for emp in employees %}
+            <tr>
+              <td>
+                <span class="code-pill" style="font-weight: 700; color: var(--primary);">
+                  {{ emp.employee_id }}
+                </span>
+              </td>
+              <td>
+                <strong style="color: var(--text-primary);">{{ emp.employee_name }}</strong>
+              </td>
+              <td>{{ emp.department }}</td>
+              <td>{{ emp.designation }}</td>
+              <td>
+                <span style="font-weight: 600; color: #047857;">
+                  ${{ "{:,.2f}".format(emp.salary) }}
+                </span>
+              </td>
+              <td style="color: var(--text-secondary); font-size: 13px;">{{ emp.joining_date }}</td>
+              <td>
+                <div style="font-size: 12.5px;">
+                  <div>{{ emp.email }}</div>
+                  <div style="color: var(--text-muted);">{{ emp.phone }}</div>
+                </div>
+              </td>
+              <td style="text-align: right;">
+                <div class="action-buttons" style="justify-content: flex-end;">
+                  <!-- Edit Employee -->
+                  <a href="{{ url_for('employees.edit_employee', id=emp.id) }}" class="btn btn-outline btn-sm" title="Edit Employee">
+                    <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                    </svg>
+                    <span>Edit</span>
+                  </a>
+
+                  <!-- Delete Employee -->
+                  <button
+                    type="button"
+                    class="btn btn-outline btn-sm btn-delete-trigger"
+                    style="color: var(--danger); border-color: #fecaca;"
+                    data-action="{{ url_for('employees.delete_employee', id=emp.id) }}"
+                    data-name="{{ emp.employee_name }} ({{ emp.employee_id }})"
+                    title="Delete Employee"
+                  >
+                    <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                    </svg>
+                    <span>Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td colspan="8">
+              <div class="empty-state">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/>
+                </svg>
+                <h4>No Employee Records Stored</h4>
+                <p>
+                  {% if search_query %}
+                    No employees matched "{{ search_query }}". <a href="{{ url_for('employees.list_employees') }}">Clear search query</a>.
+                  {% else %}
+                    No employee profiles are currently saved in SQLite.
+                  {% endif %}
+                </p>
+                <div style="margin-top: 16px;">
+                  <a href="{{ url_for('employees.add_employee') }}" class="btn btn-primary btn-sm">Register First Employee</a>
+                </div>
+              </div>
+            </td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
