@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}500 — Server Error{% endblock %}
+
+{% block content %}
+<div style="text-align: center; padding: 60px 20px; max-width: 540px; margin: 0 auto;">
+  <div style="font-size: 64px; font-weight: 800; color: var(--danger); line-height: 1;">500</div>
+  <h2 style="font-size: 22px; font-weight: 700; margin: 16px 0 8px 0; color: var(--text-primary);">Internal Server Error</h2>
+  <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 24px;">
+    An unexpected error occurred while executing this operation. Database integrity has been maintained.
+  </p>
+  <a href="{{ url_for('dashboard.index') }}" class="btn btn-primary">Return to Dashboard</a>
+</div>
+{% endblock %}

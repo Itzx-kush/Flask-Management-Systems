@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}400 — Bad Request{% endblock %}
+
+{% block content %}
+<div style="text-align: center; padding: 60px 20px; max-width: 540px; margin: 0 auto;">
+  <div style="font-size: 64px; font-weight: 800; color: var(--danger); line-height: 1;">400</div>
+  <h2 style="font-size: 22px; font-weight: 700; margin: 16px 0 8px 0; color: var(--text-primary);">Request Validation Error</h2>
+  <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 24px;">
+    {{ message or "The server could not process the request. Please verify your inputs or refresh the page." }}
+  </p>
+  <a href="{{ url_for('dashboard.index') }}" class="btn btn-primary">Return to Dashboard</a>
+</div>
+{% endblock %}

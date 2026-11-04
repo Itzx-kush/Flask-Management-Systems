@@ -1,0 +1,374 @@
+{% extends "base.html" %}
+
+{% block title %}Practical Demonstrations & Laboratory Documentation{% endblock %}
+
+{% block content %}
+<div class="breadcrumb-nav">
+  <a href="{{ url_for('dashboard.index') }}">Dashboard</a>
+  <span class="breadcrumb-separator">/</span>
+  <span>Practical Documentation</span>
+</div>
+
+<div class="page-header">
+  <div class="page-header-text">
+    <h2>Practical Demonstrations</h2>
+    <p>Comprehensive academic documentation detailing aims, algorithms, route mappings, database schemas, and results for all four laboratory questions.</p>
+  </div>
+  <a href="{{ url_for('dashboard.index') }}" class="btn btn-primary btn-sm">Return to Dashboard</a>
+</div>
+
+<!-- =========================================================================
+     PRACTICAL 1
+     ========================================================================= -->
+<section class="doc-section" id="practical-1">
+  <div class="doc-section-header">
+    <div>
+      <span class="practical-badge badge-p1">Laboratory Practical 1</span>
+      <h3>Student Management System Using Flask Forms</h3>
+    </div>
+    <a href="{{ url_for('student_form.form') }}" class="btn btn-outline btn-sm">Launch Practical 1</a>
+  </div>
+
+  <div class="doc-grid">
+    <div class="doc-block">
+      <h4>1. Aim</h4>
+      <p>
+        To develop a Python web application for a Student Management System using Flask, accept student name and department details via an HTML form, perform comprehensive server-side input validation, and display the validated student details on a formatted result page.
+      </p>
+    </div>
+
+    <div class="doc-block">
+      <h4>2. Software Requirements</h4>
+      <ul>
+        <li><strong>Programming Language:</strong> Python 3.10+</li>
+        <li><strong>Web Framework:</strong> Flask (v3.x)</li>
+        <li><strong>Template Engine:</strong> Jinja2</li>
+        <li><strong>Front-End Technologies:</strong> HTML5, CSS3</li>
+        <li><strong>Client Browser:</strong> Any modern browser (Chrome, Edge, Firefox)</li>
+      </ul>
+    </div>
+
+    <div class="doc-block" style="grid-column: span 2;">
+      <h4>3. Procedure / Algorithm</h4>
+      <ol>
+        <li>Initialize a Flask Blueprint <code class="code-pill">student_form_bp</code> bound to url prefix <code class="code-pill">/student-form</code>.</li>
+        <li>Define route <code class="code-pill">/student-form/</code> supporting both <code class="code-pill">GET</code> and <code class="code-pill">POST</code> HTTP methods.</li>
+        <li>When a <code class="code-pill">GET</code> request is received, render the registration form (<code class="code-pill">student_form/form.html</code>) containing fields for Student Name and Department dropdown.</li>
+        <li>When a <code class="code-pill">POST</code> request is received, extract form fields using <code class="code-pill">request.form.get()</code>.</li>
+        <li>Perform server-side validation checks:
+          <ul>
+            <li>Ensure Student Name is not empty, meets length limits (2–60 characters), and contains valid alphabetic characters.</li>
+            <li>Ensure Department is non-empty and belongs to the approved list of academic departments.</li>
+          </ul>
+        </li>
+        <li>If any validation fails, flash danger notifications and re-render the form preserving previous inputs alongside contextual error messages.</li>
+        <li>If validation passes, render <code class="code-pill">student_form/result.html</code> displaying the submitted student name, selected department, and submission timestamp.</li>
+      </ol>
+    </div>
+
+    <div class="doc-block">
+      <h4>4. Implementation Summary</h4>
+      <p>
+        Demonstrates the stateless form processing pipeline: <em>HTML Form &rarr; Flask Route &rarr; Input Validation &rarr; Result View</em>. No database is required or utilized for this fundamental practical.
+      </p>
+    </div>
+
+    <div class="doc-block">
+      <h4>5. Important Flask Routes</h4>
+      <ul>
+        <li><code class="code-pill">GET /student-form/</code> — Renders blank student registration form.</li>
+        <li><code class="code-pill">POST /student-form/</code> — Validates submitted credentials and renders result view.</li>
+      </ul>
+    </div>
+
+    <div class="doc-block">
+      <h4>6. Database Operations</h4>
+      <p>
+        <em>Not Applicable</em>: Stateless form handling per specification. Demonstrates raw HTTP request-response cycle and template binding without persistent storage.
+      </p>
+    </div>
+
+    <div class="doc-block">
+      <h4>7. Expected Output</h4>
+      <p>
+        A responsive registration form that alerts users if fields are empty or invalid, and upon successful validation, renders a confirmation receipt displaying student details.
+      </p>
+    </div>
+  </div>
+
+  <div class="doc-block" style="background: #eff6ff; border-color: #bfdbfe;">
+    <h4 style="color: var(--primary);">8. Result</h4>
+    <p style="color: #1e3a8a;">
+      Successfully designed and implemented the Student Management System form using Flask. Input validation accurately accepts valid entries, rejects erroneous submissions, and renders clean confirmation feedback.
+    </p>
+  </div>
+</section>
+
+<!-- =========================================================================
+     PRACTICAL 2
+     ========================================================================= -->
+<section class="doc-section" id="practical-2">
+  <div class="doc-section-header">
+    <div>
+      <span class="practical-badge badge-p2">Laboratory Practical 2</span>
+      <h3>Hospital Appointment System Using Flask</h3>
+    </div>
+    <a href="{{ url_for('hospital.index') }}" class="btn btn-outline btn-sm">Launch Practical 2</a>
+  </div>
+
+  <div class="doc-grid">
+    <div class="doc-block">
+      <h4>1. Aim</h4>
+      <p>
+        To develop a Python web application for a Hospital Appointment System using Flask that accepts patient name, consulting doctor, appointment date, contact phone, and email through a form, validates all user inputs, and displays an appointment confirmation slip with an auto-generated tracking ID.
+      </p>
+    </div>
+
+    <div class="doc-block">
+      <h4>2. Software Requirements</h4>
+      <ul>
+        <li><strong>Programming Language:</strong> Python 3.10+</li>
+        <li><strong>Web Framework:</strong> Flask</li>
+        <li><strong>Libraries:</strong> Python <code class="code-pill">datetime</code>, <code class="code-pill">re</code>, <code class="code-pill">random</code></li>
+        <li><strong>Front-End:</strong> HTML5 Date Pickers, CSS3, JavaScript</li>
+      </ul>
+    </div>
+
+    <div class="doc-block" style="grid-column: span 2;">
+      <h4>3. Procedure / Algorithm</h4>
+      <ol>
+        <li>Establish doctor directory array containing names and medical specializations (Cardiology, Neurology, Pediatrics, Orthopedics, etc.).</li>
+        <li>Define route <code class="code-pill">GET /hospital/</code> to display the appointment booking interface with doctor select options and current date set as minimum allowable date.</li>
+        <li>Define route <code class="code-pill">POST /hospital/book</code> to process booking requests.</li>
+        <li>Execute multi-field validation:
+          <ul>
+            <li>Patient Name: Not empty, contains valid letters.</li>
+            <li>Doctor Name: Must exist in the official hospital directory.</li>
+            <li>Appointment Date: Valid ISO format, must be equal to or greater than today's date (<code class="code-pill">parsed_date &gt;= date.today()</code>).</li>
+            <li>Contact Number: Standard 10–15 digit phone format.</li>
+            <li>Email Address: Valid RFC 5322 compatible email structure.</li>
+          </ul>
+        </li>
+        <li>Upon validation failure, return the form with input preservation and field-level error messages.</li>
+        <li>Upon validation success, generate a unique tracking identifier (<code class="code-pill">APT-YYYYMMDD-XXXX</code>).</li>
+        <li>Render <code class="code-pill">hospital/confirmation.html</code> displaying appointment ID, patient name, doctor, date, contact info, status 'Confirmed', and academic disclaimer.</li>
+      </ol>
+    </div>
+
+    <div class="doc-block">
+      <h4>4. Implementation Summary</h4>
+      <p>
+        Simulates an enterprise healthcare scheduling flow incorporating date constraint checks, doctor directory lookup, regex validation, and professional confirmation slip generation.
+      </p>
+    </div>
+
+    <div class="doc-block">
+      <h4>5. Important Flask Routes</h4>
+      <ul>
+        <li><code class="code-pill">GET /hospital/</code> — Displays consultation booking interface.</li>
+        <li><code class="code-pill">POST /hospital/book</code> — Validates appointment inputs and displays confirmation.</li>
+      </ul>
+    </div>
+
+    <div class="doc-block">
+      <h4>6. Database Operations</h4>
+      <p>
+        <em>Academic Simulation</em>: In alignment with assignment instructions, database persistence is omitted; simulation focuses on advanced input sanitization and verification.
+      </p>
+    </div>
+
+    <div class="doc-block">
+      <h4>7. Expected Output</h4>
+      <p>
+        A validated booking form preventing past dates, coupled with a formal appointment confirmation receipt highlighting patient credentials and consultation timestamp.
+      </p>
+    </div>
+  </div>
+
+  <div class="doc-block" style="background: #fdf2f8; border-color: #fbcfe8;">
+    <h4 style="color: #9d174d;">8. Result</h4>
+    <p style="color: #831843;">
+      Successfully implemented the Hospital Appointment System in Flask with strict date integrity verification and verified confirmation generation.
+    </p>
+  </div>
+</section>
+
+<!-- =========================================================================
+     PRACTICAL 3
+     ========================================================================= -->
+<section class="doc-section" id="practical-3">
+  <div class="doc-section-header">
+    <div>
+      <span class="practical-badge badge-p3">Laboratory Practical 3</span>
+      <h3>Student Information Management System Using Flask and SQLite</h3>
+    </div>
+    <a href="{{ url_for('students.list_students') }}" class="btn btn-indigo btn-sm">Launch Practical 3</a>
+  </div>
+
+  <div class="doc-grid">
+    <div class="doc-block">
+      <h4>1. Aim</h4>
+      <p>
+        To design and implement a complete database-driven Student Information Management System using Flask, SQLite, and HTML forms supporting all four Create, Read, Update, and Delete (CRUD) operations, unique constraints, and real-time search.
+      </p>
+    </div>
+
+    <div class="doc-block">
+      <h4>2. Software Requirements</h4>
+      <ul>
+        <li><strong>Programming Language:</strong> Python 3.10+</li>
+        <li><strong>Web Framework:</strong> Flask</li>
+        <li><strong>Database Engine:</strong> SQLite 3 (<code class="code-pill">instance/management.db</code>)</li>
+        <li><strong>SQL Access:</strong> Parameterized SQLite3 queries with Row factory</li>
+      </ul>
+    </div>
+
+    <div class="doc-block" style="grid-column: span 2;">
+      <h4>3. Procedure / Algorithm</h4>
+      <ol>
+        <li>Create the <code class="code-pill">students</code> table in SQLite with schema: <code class="code-pill">id</code> (PK Auto), <code class="code-pill">student_name</code>, <code class="code-pill">roll_number</code> (UNIQUE), <code class="code-pill">department</code>, <code class="code-pill">email</code>, <code class="code-pill">phone</code>, <code class="code-pill">semester</code>, and <code class="code-pill">created_at</code>.</li>
+        <li><strong>CREATE:</strong> Route <code class="code-pill">GET/POST /students/add</code> accepts student details. Checks SQLite for duplicate roll number. Inserts record using parameterized SQL.</li>
+        <li><strong>READ:</strong> Route <code class="code-pill">GET /students/</code> queries all students ordered by ID descending. Supports query parameter <code class="code-pill">?q=</code> for live search filtering. Route <code class="code-pill">GET /students/&lt;id&gt;</code> displays individual profile.</li>
+        <li><strong>UPDATE:</strong> Route <code class="code-pill">GET/POST /students/edit/&lt;id&gt;</code> loads existing row into form, validates updates, ensures roll number uniqueness across other rows (<code class="code-pill">roll_number = ? AND id != ?</code>), and executes <code class="code-pill">UPDATE</code>.</li>
+        <li><strong>DELETE:</strong> Route <code class="code-pill">POST /students/delete/&lt;id&gt;</code> triggers from a JavaScript confirmation modal, executes <code class="code-pill">DELETE FROM students WHERE id = ?</code>, and refreshes directory.</li>
+      </ol>
+    </div>
+
+    <div class="doc-block">
+      <h4>4. Implementation Summary</h4>
+      <p>
+        Full-stack relational persistence module guaranteeing data safety across server restarts, parameterized injection prevention, and responsive admin data table rendering.
+      </p>
+    </div>
+
+    <div class="doc-block">
+      <h4>5. Important Flask Routes</h4>
+      <ul>
+        <li><code class="code-pill">GET /students/</code> — Read / Search all records.</li>
+        <li><code class="code-pill">GET/POST /students/add</code> — Create new student.</li>
+        <li><code class="code-pill">GET /students/&lt;id&gt;</code> — Read single student profile.</li>
+        <li><code class="code-pill">GET/POST /students/edit/&lt;id&gt;</code> — Update existing record.</li>
+        <li><code class="code-pill">POST /students/delete/&lt;id&gt;</code> — Delete record with confirmation.</li>
+      </ul>
+    </div>
+
+    <div class="doc-block">
+      <h4>6. Database Operations</h4>
+      <ul>
+        <li><code class="code-pill">CREATE TABLE IF NOT EXISTS students (...)</code></li>
+        <li><code class="code-pill">INSERT INTO students VALUES (...)</code></li>
+        <li><code class="code-pill">SELECT * FROM students WHERE ...</code></li>
+        <li><code class="code-pill">UPDATE students SET ... WHERE id = ?</code></li>
+        <li><code class="code-pill">DELETE FROM students WHERE id = ?</code></li>
+      </ul>
+    </div>
+
+    <div class="doc-block">
+      <h4>7. Expected Output</h4>
+      <p>
+        An administrative table listing enrolled students, add/edit modal interfaces, unique roll number rejection alerts, and instant record deletion with modal dialog verification.
+      </p>
+    </div>
+  </div>
+
+  <div class="doc-block" style="background: #f5f3ff; border-color: #ddd6fe;">
+    <h4 style="color: #6d28d9;">8. Result</h4>
+    <p style="color: #4c1d95;">
+      Successfully built a complete SQLite-driven Student Information Management System fulfilling all CRUD specifications with permanent data persistence.
+    </p>
+  </div>
+</section>
+
+<!-- =========================================================================
+     PRACTICAL 4
+     ========================================================================= -->
+<section class="doc-section" id="practical-4">
+  <div class="doc-section-header">
+    <div>
+      <span class="practical-badge badge-p4">Laboratory Practical 4</span>
+      <h3>Employee Management System Using Flask and Database</h3>
+    </div>
+    <a href="{{ url_for('employees.list_employees') }}" class="btn btn-primary btn-sm">Launch Practical 4</a>
+  </div>
+
+  <div class="doc-grid">
+    <div class="doc-block">
+      <h4>1. Aim</h4>
+      <p>
+        To design a Python web application for an Employee Management System using Flask and SQLite, accept employee employment and compensation details via an HTML form, store information into the database, and display stored records in a structured tabular directory.
+      </p>
+    </div>
+
+    <div class="doc-block">
+      <h4>2. Software Requirements</h4>
+      <ul>
+        <li><strong>Programming Language:</strong> Python 3.10+</li>
+        <li><strong>Web Framework:</strong> Flask</li>
+        <li><strong>Database Engine:</strong> SQLite 3 (<code class="code-pill">instance/management.db</code>)</li>
+        <li><strong>Security:</strong> Parameterized SQL execution &amp; CSRF protection</li>
+      </ul>
+    </div>
+
+    <div class="doc-block" style="grid-column: span 2;">
+      <h4>3. Procedure / Algorithm</h4>
+      <ol>
+        <li>Create the <code class="code-pill">employees</code> table in SQLite: <code class="code-pill">id</code>, <code class="code-pill">employee_id</code> (UNIQUE), <code class="code-pill">employee_name</code>, <code class="code-pill">department</code>, <code class="code-pill">designation</code>, <code class="code-pill">email</code>, <code class="code-pill">phone</code>, <code class="code-pill">salary</code> (REAL), <code class="code-pill">joining_date</code>, and <code class="code-pill">created_at</code>.</li>
+        <li>Define route <code class="code-pill">GET/POST /employees/add</code> to render registration form and handle submission.</li>
+        <li>Validate all mandatory inputs:
+          <ul>
+            <li>Employee ID: Non-empty, alphanumeric, unique check against SQLite database.</li>
+            <li>Employee Name, Department, and Designation: Mandatory strings.</li>
+            <li>Email &amp; Phone: Valid corporate formats.</li>
+            <li>Salary: Valid positive floating-point value (<code class="code-pill">salary &gt; 0</code>).</li>
+            <li>Joining Date: Valid date format.</li>
+          </ul>
+        </li>
+        <li>Execute parameterized query to insert record into <code class="code-pill">employees</code>.</li>
+        <li>Define route <code class="code-pill">GET /employees/</code> to retrieve all stored records and render tabular interface.</li>
+        <li>Provide search filter by employee name or employee ID. Include Edit and Delete support for management completeness.</li>
+      </ol>
+    </div>
+
+    <div class="doc-block">
+      <h4>4. Implementation Summary</h4>
+      <p>
+        Provides corporate workforce data tracking with strict schema validation, unique ID enforcement, formatted salary representations, and persistent storage.
+      </p>
+    </div>
+
+    <div class="doc-block">
+      <h4>5. Important Flask Routes</h4>
+      <ul>
+        <li><code class="code-pill">GET /employees/</code> — Display all stored employee records and search bar.</li>
+        <li><code class="code-pill">GET/POST /employees/add</code> — Employee registration and SQLite insertion.</li>
+        <li><code class="code-pill">GET/POST /employees/edit/&lt;id&gt;</code> — Edit employee details.</li>
+        <li><code class="code-pill">POST /employees/delete/&lt;id&gt;</code> — Delete employee record.</li>
+      </ul>
+    </div>
+
+    <div class="doc-block">
+      <h4>6. Database Operations</h4>
+      <ul>
+        <li><code class="code-pill">CREATE TABLE IF NOT EXISTS employees (...)</code></li>
+        <li><code class="code-pill">INSERT INTO employees (...) VALUES (?, ?, ...)</code></li>
+        <li><code class="code-pill">SELECT * FROM employees ORDER BY id DESC</code></li>
+        <li><code class="code-pill">SELECT * FROM employees WHERE employee_name LIKE ? OR employee_id LIKE ?</code></li>
+      </ul>
+    </div>
+
+    <div class="doc-block">
+      <h4>7. Expected Output</h4>
+      <p>
+        Employee registration form with error feedback, and a clean tabular directory displaying employee names, IDs, departments, salaries, and contact numbers.
+      </p>
+    </div>
+  </div>
+
+  <div class="doc-block" style="background: #f0fdf4; border-color: #bbf7d0;">
+    <h4 style="color: #166534;">8. Result</h4>
+    <p style="color: #14532d;">
+      Successfully constructed the Employee Management System using Flask and SQLite, fulfilling all data entry, validation, and tabular display requirements.
+    </p>
+  </div>
+</section>
+{% endblock %}

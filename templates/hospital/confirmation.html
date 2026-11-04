@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}Appointment Confirmed — Practical 2{% endblock %}
+
+{% block content %}
+<div class="breadcrumb-nav">
+  <a href="{{ url_for('dashboard.index') }}">Dashboard</a>
+  <span class="breadcrumb-separator">/</span>
+  <a href="{{ url_for('hospital.index') }}">Hospital Appointment</a>
+  <span class="breadcrumb-separator">/</span>
+  <span>Confirmation Slip</span>
+</div>
+
+<div class="confirmation-card">
+  <div class="confirmation-header">
+    <div class="confirmation-icon">
+      <svg width="32" height="32" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+      </svg>
+    </div>
+    <h2>Appointment Confirmed</h2>
+    <p>Your hospital consultation has been successfully scheduled.</p>
+  </div>
+
+  <div class="confirmation-body">
+    <div class="detail-list">
+      <div class="detail-item">
+        <span class="detail-label">Appointment ID</span>
+        <span class="detail-value"><code class="code-pill">{{ appointment_id }}</code></span>
+      </div>
+
+      <div class="detail-item">
+        <span class="detail-label">Patient Name</span>
+        <span class="detail-value">{{ patient_name }}</span>
+      </div>
+
+      <div class="detail-item">
+        <span class="detail-label">Consulting Doctor</span>
+        <span class="detail-value">{{ doctor_name }} ({{ specialization }})</span>
+      </div>
+
+      <div class="detail-item">
+        <span class="detail-label">Appointment Date</span>
+        <span class="detail-value">{{ appointment_date }}</span>
+      </div>
+
+      <div class="detail-item">
+        <span class="detail-label">Contact Number</span>
+        <span class="detail-value">{{ contact_number }}</span>
+      </div>
+
+      <div class="detail-item">
+        <span class="detail-label">Email Address</span>
+        <span class="detail-value">{{ email }}</span>
+      </div>
+
+      <div class="detail-item">
+        <span class="detail-label">Appointment Status</span>
+        <span class="detail-value" style="color: var(--success); font-weight: 700;">
+          {{ status }}
+        </span>
+      </div>
+    </div>
+
+    <div class="disclaimer-banner">
+      <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+      </svg>
+      <span><strong>Educational Notice:</strong> This appointment confirmation is an academic laboratory demonstration. It does not represent an actual medical booking with a medical provider.</span>
+    </div>
+
+    <div style="margin-top: 32px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+      <a href="{{ url_for('hospital.index') }}" class="btn btn-primary">
+        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+        </svg>
+        <span>Book Another Appointment</span>
+      </a>
+      <a href="{{ url_for('dashboard.index') }}" class="btn btn-outline">
+        <span>Back to Dashboard</span>
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}
